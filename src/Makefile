@@ -24,7 +24,7 @@ debug: all
 release: CPPFLAGS += -DNDEBUG -Ofast
 release: all
 
-all: $(BUILD_DIR)/alpha_parser.o $(BUILD_DIR)/alpha_lexer.o app.cpp appGUIDebug.cpp appCLIDebug.cpp \
+all: $(BUILD_DIR) $(BUILD_DIR)/alpha_parser.o $(BUILD_DIR)/alpha_lexer.o app.cpp appGUIDebug.cpp appCLIDebug.cpp \
 	$(BUILD_DIR)/GUIDebuggerInputController.o $(BUILD_DIR)/GUIDebuggerWindow.o $(OBJECTS)
 
 	$(CC) $(OBJECTS) $(BUILD_DIR)/alpha_parser.o $(BUILD_DIR)/alpha_lexer.o app.cpp -o $(EXEC1)
