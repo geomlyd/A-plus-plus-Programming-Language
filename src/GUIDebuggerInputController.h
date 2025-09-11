@@ -6,6 +6,8 @@
 #include "DebugDispatcher.h"
 #include "ASTCreator.h"
 #include <fstream>
+#include <mutex>
+#include <condition_variable>
 
 
 class GUIDebuggerWindow;
@@ -18,6 +20,9 @@ private:
     Object *astRoot;
     GUIDebuggerWindow *win;
     std::string sourceCode;
+
+    std::mutex mode_mutex;
+    std::condition_variable mode_is_not_paused;    
 
     void onButtonClickContinue();
     void onButtonClickStepOver();

@@ -37,6 +37,7 @@ public:
     void removeBreakpoint(unsigned lineNo);
     void removeAllBreakpoints();
     void setExecutionMode(ExecutionModes m);
+    ExecutionModes getExecutionMode();
     unsigned getCurrLine();
     void setInterpreter(Interpreter *_i);
    

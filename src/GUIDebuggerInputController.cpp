@@ -12,6 +12,7 @@
 void GUIDebuggerInputController::onButtonClickContinue(){
     if(inputEnabled || startupMode){
         d->setExecutionMode(DebugDispatcher::ExecutionModes::NORMAL);
+        this->mode_is_not_paused.notify_all();
         inputEnabled = false;
         if(startupMode){
             startupMode = false;
@@ -32,6 +33,7 @@ void GUIDebuggerInputController::onButtonClickContinue(){
 void GUIDebuggerInputController::onButtonClickStepOver(){
     if(inputEnabled){
         d->setExecutionMode(DebugDispatcher::ExecutionModes::STEP_OVER);
+        this->mode_is_not_paused.notify_all();
         inputEnabled = false;
     }
 }
@@ -39,6 +41,7 @@ void GUIDebuggerInputController::onButtonClickStepOver(){
 void GUIDebuggerInputController::onButtonClickStepIn(){
     if(inputEnabled){
         d->setExecutionMode(DebugDispatcher::ExecutionModes::STEP_IN);
+        this->mode_is_not_paused.notify_all();
         inputEnabled = false;
     }
 }
@@ -178,4 +181,9 @@ void GUIDebuggerInputController::addObjectFieldToView(const Value &name, const V
 void GUIDebuggerInputController::handleInput(DebugDispatcher *d){
     inputEnabled = true;
     refreshView = true;
+    std::unique_lock<std::mutex> lock(this->mode_mutex);
+    d->setExecutionMode(DebugDispatcher::ExecutionModes::PAUSED);
+    this->mode_is_not_paused.wait(lock, [d] {
+        return d->getExecutionMode() != DebugDispatcher::ExecutionModes::PAUSED;});
+    lock.unlock();
 }

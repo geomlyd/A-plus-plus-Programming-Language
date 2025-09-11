@@ -53,6 +53,7 @@ The following metaprogramming features are available:
 
     Prints 5, i.e., has the same effect as `eval("print(2 + 3);")`.
 - `#(syntax_tree)` (unparse): converts a syntax tree to source code.
+
     Example:
     ```
     z = <<x = 1; y = 2; print(x + y);>>;
@@ -69,7 +70,7 @@ The `metaprogrammingTests` directory contains several examples for these feature
 You'll need the gtkmm3 library in order to use the visual debugger.
 Installation instructions can be found [here](https://gtkmm.gnome.org/en/download.html).
 
-From the project root, run 
+After installing gktmm3, from the project root, run 
 ```bash
 make -C src release
 ```

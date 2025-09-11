@@ -23,12 +23,7 @@ const Value DebugDispatcher::eval(Object &node){
 
     if(pausableNodeTypes.find(nodeType) != pausableNodeTypes.end() && 
         (breakpoints.find(nodeLine) != breakpoints.end() || mode != NORMAL) && !skipCalls && (nodeType != AST_TAG_CALL || mode != NORMAL)){
-        std::unique_lock<std::mutex> lock(this->mode_mutex);
-        mode = PAUSED;
         inputController->handleInput(this);
-        // while(mode == PAUSED);
-        this->mode_is_not_paused.wait(lock, [this] {return this->mode != PAUSED;});
-        lock.unlock();
         if(nodeType == AST_TAG_CALL && mode == STEP_OVER)
                 skipCalls = true;
         ret = evals[node[AST_TAG_SUBTYPE_KEY]->toString()](node);
@@ -56,9 +51,11 @@ void DebugDispatcher::removeAllBreakpoints(){
 }
 
 void DebugDispatcher::setExecutionMode(ExecutionModes m){
-    std::lock_guard<std::mutex> lock(mode_mutex);
     mode = m;
-    this->mode_is_not_paused.notify_all();
+}
+
+DebugDispatcher::ExecutionModes DebugDispatcher::getExecutionMode(){
+    return mode;
 }
 
 unsigned DebugDispatcher::getCurrLine(){
