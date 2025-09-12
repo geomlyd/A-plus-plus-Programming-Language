@@ -1,7 +1,7 @@
 #ifndef GUI_DEBUGGER_WINDOW_H
 #define GUI_DEBUGGER_WINDOW_H
 
-#include <gtkmm/window.h>
+#include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/box.h>
 #include <gtkmm/treeview.h>
@@ -16,7 +16,7 @@
 #include <stack>
 #include <set>
 
-class GUIDebuggerWindow : public Gtk::Window {
+class GUIDebuggerWindow : public Gtk::ApplicationWindow {
 public:
     GUIDebuggerWindow(); 
     virtual ~GUIDebuggerWindow(){};

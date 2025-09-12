@@ -157,7 +157,9 @@ void GUIDebuggerInputController::launchGUI(std::ifstream *inputFile, Interpreter
     sourceCode = sourceText.str();
     win->fillBuffer(sourceCode, 0);
     refreshView = false;
+    win->signal_hide().connect([app]() {app->quit();});    
     app->run(*win);
+    delete win;
 }
 
 void GUIDebuggerInputController::setInitialBreakpoints(DebugDispatcher *d){
