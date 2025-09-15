@@ -73,7 +73,12 @@ void CLIDebuggerInputController::handleInput(DebugDispatcher *d){
             "\trb <lineNumber> - remove breakpoint at specified line\n"
             "\tpr <var_name> - print value of variable with name <var_name>\n"
             "\tst - print stack trace\n"
+            "\tq - exit the debugger and terminate program execution\n"
             "\thelp - print this help message\n");
+        }
+        else if(command == "q"){
+            d->setExecutionMode(DebugDispatcher::ExecutionModes::EARLY_EXIT);
+            breakLoop = true;
         }
         else
             printf("Unknown command \"%s\"\n", command.c_str());

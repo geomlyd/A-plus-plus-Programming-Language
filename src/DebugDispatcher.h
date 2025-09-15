@@ -13,7 +13,7 @@
 class DebugDispatcher : public EvalDispatcher {
 public:
     enum ExecutionModes{
-        NORMAL = 0, PAUSED, STEP_OVER, STEP_IN
+        NORMAL = 0, PAUSED, STEP_OVER, STEP_IN, EARLY_EXIT
     };
 private:
     std::set<std::string> pausableNodeTypes;

@@ -24,6 +24,9 @@ const Value DebugDispatcher::eval(Object &node){
     if(pausableNodeTypes.find(nodeType) != pausableNodeTypes.end() && 
         (breakpoints.find(nodeLine) != breakpoints.end() || mode != NORMAL) && !skipCalls && (nodeType != AST_TAG_CALL || mode != NORMAL)){
         inputController->handleInput(this);
+        if(mode == EARLY_EXIT){
+            exit(0);
+        }
         if(nodeType == AST_TAG_CALL && mode == STEP_OVER)
                 skipCalls = true;
         ret = evals[node[AST_TAG_SUBTYPE_KEY]->toString()](node);
